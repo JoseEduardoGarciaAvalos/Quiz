@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  urlBaseQuizAPI: "https://quiz-server-jega.herokuapp.com/"
 };
