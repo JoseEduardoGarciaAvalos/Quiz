@@ -1,5 +1,5 @@
 <div class="container cinta mt-4">
-  <app-pregunta></app-pregunta>
+  <app-pregunta [texto]="pregunta"></app-pregunta>
 </div>
 
 <div class="container my-3">
@@ -15,6 +15,7 @@
         [texto]="opcion.texto"
         [error]="opcion.error"
         [correct]="opcion.correct"
+        (click)="opcion.selected = !opcion.selected"
       ></app-opcion>
     </div>
   </div>
@@ -24,7 +25,14 @@
   <div class="row mx-5">
     <div class="col-12 d-flex justify-content-end">
       <button class="my-4 mx-3" mat-raised-button>Comprobar</button>
-      <button class="my-4" mat-raised-button color="primary">Siguiente</button>
+      <button
+        (click)="siguientePregunta()"
+        class="my-4"
+        mat-raised-button
+        color="primary"
+      >
+        Siguiente
+      </button>
     </div>
   </div>
 </div>

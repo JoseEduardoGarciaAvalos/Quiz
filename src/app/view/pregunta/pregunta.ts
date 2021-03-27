@@ -1,6 +1,4 @@
-import { Component, OnInit } from "@angular/core";
-import { QuizService } from "src/app/service/quiz.service";
-import { Pregunta } from "src/app/model/Pregunta";
+import { Component, Input, OnInit } from "@angular/core";
 
 @Component({
   selector: "app-pregunta",
@@ -8,13 +6,9 @@ import { Pregunta } from "src/app/model/Pregunta";
   styleUrls: ["./pregunta.css"]
 })
 export class PreguntaComponent implements OnInit {
-  public pregunta: Pregunta = new Pregunta();
+  @Input() texto: string = "";
 
-  constructor(private quizS: QuizService) {}
+  constructor() {}
 
-  ngOnInit(): void {
-    this.quizS.getPreguntas().subscribe((data) => {
-      this.pregunta = data.preguntas[0];
-    });
-  }
+  ngOnInit(): void {}
 }
