@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from "@angular/core";
+import { Opcion, OpcionClass } from "src/app/model/Opcion";
 
 @Component({
   selector: "app-opcion",
@@ -7,9 +8,8 @@ import { Component, Input, OnInit } from "@angular/core";
 })
 export class OpcionComponent implements OnInit {
   @Input() correlativo: number;
-  @Input() texto: string;
-  @Input() error: boolean;
-  @Input() correct: boolean;
+  @Input() opcion: Opcion = new Opcion();
+  @Input() clases: OpcionClass = new OpcionClass();
 
   constructor() {}
 

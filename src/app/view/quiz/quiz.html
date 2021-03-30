@@ -2,23 +2,15 @@
   <app-pregunta [texto]="pregunta"></app-pregunta>
 </div>
 
-<div class="container my-3">
-  <div class="row">
-    <div class="col-12">
-      <app-opcion
-        class="card mt-3 p-2 opcion error"
-        [class.selected]="opcion.selected"
-        [class.error]="opcion.error"
-        [class.correct]="opcion.correct"
-        *ngFor="let opcion of opciones; index as i"
-        [correlativo]="i+1"
-        [texto]="opcion.texto"
-        [error]="opcion.error"
-        [correct]="opcion.correct"
-        (click)="opcion.selected = !opcion.selected"
-      ></app-opcion>
-    </div>
-  </div>
+<div class="container">
+  <app-opcion
+    class="mt-4 p-2"
+    *ngFor="let opcion of opciones; index as i"
+    [correlativo]="i+1"
+    [opcion]="opcion"
+    [clases]="opcionesClass[i]"
+    (click)="opcionesClass[i].selected =!opcionesClass[i].selected"
+  ></app-opcion>
 </div>
 
 <div class="container cinta my-4">
