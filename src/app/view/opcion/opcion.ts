@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from "@angular/core";
-import { Opcion, OpcionClass } from "src/app/model/Opcion";
+import { Opcion } from "src/app/model/Opcion";
 
 @Component({
   selector: "app-opcion",
@@ -9,7 +9,6 @@ import { Opcion, OpcionClass } from "src/app/model/Opcion";
 export class OpcionComponent implements OnInit {
   @Input() correlativo: number;
   @Input() opcion: Opcion = new Opcion();
-  @Input() clases: OpcionClass = new OpcionClass();
 
   constructor() {}
 

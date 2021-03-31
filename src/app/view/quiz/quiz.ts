@@ -13,8 +13,9 @@ export class QuizComponent implements OnInit {
   public preguntas: Pregunta[] = [];
   public pregunta: string = "";
 
-  public opcionesClass: OpcionClass[] = [];
   public opciones: any = [];
+  public canRespuestas: number = 0;
+  public comprobado: boolean = false;
 
   constructor(private quizS: QuizService) {}
 
@@ -34,16 +35,40 @@ export class QuizComponent implements OnInit {
     this.cargarOpciones();
   }
 
+  seleccionarOpcion(opcion: Opcion) {
+    if (this.comprobado) return;
+
+    if (this.canRespuestas === 1)
+      this.opciones.map((opcion: Opcion) => (opcion.clases.selected = false));
+    opcion.clases.selected = !opcion.clases.selected;
+  }
+
   cargarOpciones() {
     this.quizS.getOpciones(this.numPregunta).subscribe((data) => {
       this.opciones = data.opciones;
-      this.opcionesClass = [];
-      this.opciones.forEach(() => {
-        this.opcionesClass.push(new OpcionClass());
-      });
-      console.log(this.opcionesClass);
+      this.canRespuestas = 0;
+      this.comprobado = false;
 
-      //
+      this.opciones.forEach((opcion: Opcion) => {
+        opcion.clases = new OpcionClass();
+        if (opcion.respuesta === 1) {
+          this.canRespuestas++;
+        }
+      });
+    });
+  }
+
+  comprobarPregunta() {
+    if (this.comprobado) return;
+
+    this.opciones.map((opcion: Opcion) => {
+      if (opcion.clases.selected) {
+        opcion.clases.correct = opcion.respuesta === 1;
+        opcion.clases.error = opcion.respuesta !== 1;
+      } else opcion.clases.forget = opcion.respuesta === 1;
+
+      this.comprobado = true;
+      return opcion;
     });
   }
 }
