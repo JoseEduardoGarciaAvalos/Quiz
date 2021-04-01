@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { QuizService } from "src/app/service/quiz.service";
-import { Opcion, OpcionClass } from "src/app/model/Opcion";
+import { Opcion, OpcionClass, OpcionList } from "src/app/model/Opcion";
 import { Pregunta } from "src/app/model/Pregunta";
 
 @Component({
@@ -13,8 +13,8 @@ export class QuizComponent implements OnInit {
   public preguntas: Pregunta[] = [];
   public pregunta: string = "";
 
-  public opciones: any = [];
-  public canRespuestas: number = 0;
+  public opciones: OpcionList = new OpcionList();
+  public numRespuestas: number = 0;
   public comprobado: boolean = false;
 
   constructor(private quizS: QuizService) {}
@@ -30,7 +30,7 @@ export class QuizComponent implements OnInit {
   siguientePregunta() {
     // this.pregunta = "";
     if (++this.numPregunta > this.preguntas.length) return;
-    this.opciones = [];
+    this.opciones = new OpcionList();
     this.pregunta = this.preguntas[this.numPregunta - 1].texto;
     this.cargarOpciones();
   }
@@ -38,37 +38,22 @@ export class QuizComponent implements OnInit {
   seleccionarOpcion(opcion: Opcion) {
     if (this.comprobado) return;
 
-    if (this.canRespuestas === 1)
-      this.opciones.map((opcion: Opcion) => (opcion.clases.selected = false));
+    if (this.numRespuestas === 1) this.opciones.resetSelected();
     opcion.clases.selected = !opcion.clases.selected;
   }
 
   cargarOpciones() {
     this.quizS.getOpciones(this.numPregunta).subscribe((data) => {
-      this.opciones = data.opciones;
-      this.canRespuestas = 0;
+      this.opciones = new OpcionList(data.opciones);
+      this.numRespuestas = this.opciones.getNumRespuestas();
       this.comprobado = false;
-
-      this.opciones.forEach((opcion: Opcion) => {
-        opcion.clases = new OpcionClass();
-        if (opcion.respuesta === 1) {
-          this.canRespuestas++;
-        }
-      });
     });
   }
 
   comprobarPregunta() {
     if (this.comprobado) return;
 
-    this.opciones.map((opcion: Opcion) => {
-      if (opcion.clases.selected) {
-        opcion.clases.correct = opcion.respuesta === 1;
-        opcion.clases.error = opcion.respuesta !== 1;
-      } else opcion.clases.forget = opcion.respuesta === 1;
-
-      this.comprobado = true;
-      return opcion;
-    });
+    this.opciones.comprobarOpciones();
+    this.comprobado = true;
   }
 }
