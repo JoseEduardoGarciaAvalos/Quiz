@@ -10,6 +10,7 @@ import { NavbarComponent } from "./view/navbar/navbar";
 import { PreguntaComponent } from "./view/pregunta/pregunta";
 import { OpcionComponent } from "./view/opcion/opcion";
 import { QuizComponent } from "./view/quiz/quiz";
+import { ResultadoComponent } from "./view/resultado/resultado";
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { QuizComponent } from "./view/quiz/quiz";
     NavbarComponent,
     PreguntaComponent,
     OpcionComponent,
-    QuizComponent
+    QuizComponent,
+    ResultadoComponent
   ],
   imports: [
     AppRoutingModule,
