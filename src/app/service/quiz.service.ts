@@ -2,13 +2,15 @@ import { Injectable } from "@angular/core";
 import { environment } from "src/environments/environment";
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
-import { Pregunta } from "src/app/model/Pregunta";
+import { Pregunta, PreguntaList } from "src/app/model/Pregunta";
 import { Opcion } from "src/app/model/Opcion";
 
 @Injectable({
   providedIn: "root"
 })
 export class QuizService {
+  public preguntas: PreguntaList = new PreguntaList();
+
   constructor(private http: HttpClient) {}
 
   /**

@@ -1,0 +1,13 @@
+<ng-container *ngFor="let pregunta of this.preguntas.get()">
+  <div class="container cinta mt-4">
+    <app-pregunta [texto]="pregunta.texto"></app-pregunta>
+  </div>
+  <div class="container">
+    <app-opcion
+      class="mt-4 p-2"
+      *ngFor="let opcion of pregunta.opciones.getOpciones(); index as i"
+      [correlativo]="i+1"
+      [opcion]="opcion"
+    ></app-opcion>
+  </div>
+</ng-container>
