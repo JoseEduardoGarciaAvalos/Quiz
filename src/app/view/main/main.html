@@ -1,0 +1,19 @@
+<section class="mx-5">
+  BANNER
+</section>
+<section class="row mx-5">
+  <article
+    class="col-4 card m-5 p-3 test-container"
+    *ngFor="let quiz of quizes"
+  >
+    <header>
+      {{quiz.titulo}}
+    </header>
+    <div>{{quiz.descripcion}}</div>
+    <div class="test-container-btns d-grid">
+      <button (click)="irQuiz(quiz.code)" mat-raised-button color="primary">
+        Realizar
+      </button>
+    </div>
+  </article>
+</section>

@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { QuizService } from "src/app/service/quiz.service";
 import { Opcion, OpcionClass, OpcionList } from "src/app/model/Opcion";
 import { Pregunta, PreguntaList } from "src/app/model/Pregunta";
-import { Router } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 
 const BTN_TEXT1: string[] = ["Siguiente", "Finalizar"];
 
@@ -23,11 +23,18 @@ export class QuizComponent implements OnInit {
 
   public btnText1: string = BTN_TEXT1[0];
 
-  constructor(private quizS: QuizService, public router: Router) {}
+  constructor(
+    private quizS: QuizService,
+    public router: Router,
+    public route: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
+    let code = this.route.snapshot.paramMap.get("code");
+    console.log(code);
+
     this.quizS.getPreguntas().subscribe((data) => {
-      this.preguntas = data.preguntas;
+      this.preguntas = data;
       this.pregunta = this.preguntas[0].texto;
       this.quizS.preguntas = new PreguntaList(this.preguntas);
       this.btnUpdateText();
@@ -65,7 +72,7 @@ export class QuizComponent implements OnInit {
 
   cargarOpciones() {
     this.quizS.getOpciones(this.numPregunta).subscribe((data) => {
-      this.opciones = new OpcionList(data.opciones);
+      this.opciones = new OpcionList(data);
       this.numRespuestas = this.opciones.getNumRespuestas();
       this.comprobado = false;
     });

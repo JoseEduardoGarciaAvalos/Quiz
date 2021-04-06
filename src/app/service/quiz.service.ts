@@ -14,6 +14,15 @@ export class QuizService {
   constructor(private http: HttpClient) {}
 
   /**
+   * getQuizes
+   */
+  public getQuizes(): Observable<any> {
+    let url = environment.urlBaseQuizAPI + "api/quiz";
+
+    return this.http.get(url);
+  }
+
+  /**
    * getPreguntas
    */
   public getPreguntas(): Observable<Pregunta[]> {
