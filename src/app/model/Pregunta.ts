@@ -22,4 +22,14 @@ export class PreguntaList extends List {
   public setOpciones(i: number, opciones: OpcionList): void {
     this.models[i].opciones = opciones;
   }
+
+  public getNumberQuestion(): number {
+    return this.get().length;
+  }
+
+  public getNumberAnsweredCorrectly(): number {
+    return this.models.reduce((previous, { opciones }) => {
+      return previous + (opciones.isCorrectAnswersByUser() ? 1 : 0);
+    }, 0);
+  }
 }

@@ -1,3 +1,7 @@
+<div>
+  Resultado {{correctAnswers}} / {{totalQuestions}}
+</div>
+
 <ng-container *ngFor="let pregunta of this.preguntas.get()">
   <div class="container cinta mt-4">
     <app-pregunta [texto]="pregunta.texto"></app-pregunta>

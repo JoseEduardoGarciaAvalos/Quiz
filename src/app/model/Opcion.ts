@@ -32,6 +32,17 @@ export class OpcionList extends List {
     return Opcion;
   }
 
+  public isCorrectAnswersByUser() {
+    return (
+      !this.isErrorAnswersByUser() &&
+      this.getNumRespuestas() === this.getNumberCorrectAnswersByUser()
+    );
+  }
+
+  public isErrorAnswersByUser() {
+    return this.getNumberErrorAnswersByUser() > 0;
+  }
+
   public resetSelected() {
     this.models.forEach((opcion: Opcion) => (opcion.clases.selected = false));
   }
@@ -45,6 +56,18 @@ export class OpcionList extends List {
   public getNumRespuestas() {
     return this.models.reduce((previous, { respuesta }) => {
       return previous + respuesta;
+    }, 0);
+  }
+
+  public getNumberCorrectAnswersByUser() {
+    return this.models.reduce((previous, { clases }) => {
+      return previous + (clases.correct ? 1 : 0);
+    }, 0);
+  }
+
+  public getNumberErrorAnswersByUser() {
+    return this.models.reduce((previous, { clases }) => {
+      return previous + (clases.error ? 1 : 0);
     }, 0);
   }
 
