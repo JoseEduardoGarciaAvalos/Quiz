@@ -28,8 +28,8 @@ export class Opcion {
 }
 
 export class OpcionList extends List {
-  get model() {
-    return Opcion;
+  public model() {
+    return new Opcion();
   }
 
   public isCorrectAnswersByUser() {

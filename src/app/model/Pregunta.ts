@@ -11,8 +11,8 @@ export class Pregunta {
 }
 
 export class PreguntaList extends List {
-  get model() {
-    return Pregunta;
+  public model() {
+    return new Pregunta();
   }
 
   public get(): Pregunta[] {
