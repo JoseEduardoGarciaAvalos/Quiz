@@ -76,6 +76,7 @@ export class QuizComponent implements OnInit {
   cargarOpciones() {
     this.quizS.getOpciones(this.numPregunta).subscribe((data) => {
       this.opciones = this.factory(data);
+      this.opciones.shuffleItems();
       this.isChecked = false;
     });
   }
