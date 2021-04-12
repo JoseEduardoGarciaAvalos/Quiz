@@ -1,77 +1,73 @@
 import { List } from "./Base";
 
-export class OpcionClass {
-  constructor(
-    public selected: boolean = false,
-    public error: boolean = false,
-    public correct: boolean = false,
-    public forget: boolean = false
-  ) {}
-}
-
 export class Opcion {
   constructor(
     public code: number = 0,
     public texto: string = "",
     public codePregunta: number = 0,
     public respuesta: number = 0,
-    public clases: OpcionClass = new OpcionClass(),
+    public userResponse: number = 0,
     public _id?: string
   ) {}
 
-  public comprobarOpcion() {
-    if (this.clases.selected) {
-      this.clases.correct = this.respuesta === 1;
-      this.clases.error = this.respuesta !== 1;
-    } else this.clases.forget = this.respuesta === 1;
+  public isCorrectResponse(): boolean {
+    return this.respuesta === this.userResponse;
+  }
+
+  public isCorrectResponseByUser(): boolean {
+    return this.isSelectedResponseByUser() && this.isCorrectResponse();
+  }
+
+  public isErrorResponseByUser(): boolean {
+    return this.isSelectedResponseByUser() && !this.isCorrectResponse();
+  }
+
+  public isSelectedResponseByUser(): boolean {
+    return this.userResponse !== 0;
+  }
+
+  public isForgetResponseByUser(): boolean {
+    // Es una opcion que olvido el usuario contestar
+    return !this.isSelectedResponseByUser() && this.respuesta !== 0;
+  }
+
+  public setUserResponse(response: number): void {
+    this.userResponse = response;
   }
 }
 
-export class OpcionList extends List {
-  public model() {
+export abstract class OpcionList extends List {
+  protected model() {
     return new Opcion();
   }
 
-  public isCorrectAnswersByUser() {
-    return (
-      !this.isErrorAnswersByUser() &&
-      this.getNumRespuestas() === this.getNumberCorrectAnswersByUser()
-    );
+  public isAllCorrectResponseByUser(): boolean {
+    for (let opcion of this.get())
+      if (!opcion.isCorrectResponse()) return false;
+
+    return true;
   }
 
-  public isErrorAnswersByUser() {
-    return this.getNumberErrorAnswersByUser() > 0;
+  public get(): Opcion[] {
+    return this.models;
   }
 
-  public resetSelected() {
-    this.models.forEach((opcion: Opcion) => (opcion.clases.selected = false));
-  }
+  public abstract changeUserResponse(valores): void;
+}
 
-  public comprobarOpciones() {
-    this.models.forEach((opcion: Opcion) => {
-      opcion.comprobarOpcion();
+export class OpcionUnicaList extends OpcionList {
+  public changeUserResponse({ code }): void {
+    this.get().forEach((opcion: Opcion) => {
+      if (opcion.code === code) opcion.setUserResponse(1);
+      else opcion.setUserResponse(0);
     });
   }
+}
 
-  public getNumRespuestas() {
-    return this.models.reduce((previous, { respuesta }) => {
-      return previous + respuesta;
-    }, 0);
-  }
-
-  public getNumberCorrectAnswersByUser() {
-    return this.models.reduce((previous, { clases }) => {
-      return previous + (clases.correct ? 1 : 0);
-    }, 0);
-  }
-
-  public getNumberErrorAnswersByUser() {
-    return this.models.reduce((previous, { clases }) => {
-      return previous + (clases.error ? 1 : 0);
-    }, 0);
-  }
-
-  public getOpciones(): Opcion[] {
-    return this.models;
+export class OpcionMultipleList extends OpcionList {
+  public changeUserResponse({ code }): void {
+    this.get().forEach((opcion: Opcion) => {
+      if (opcion.code === code) opcion.setUserResponse(1);
+    });
   }
 }

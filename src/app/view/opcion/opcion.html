@@ -1,21 +1,21 @@
 <div class="card opcion row">
   <div
     class="col-12"
-    [class.selected]="opcion.clases.selected"
-    [class.error]="opcion.clases.error"
-    [class.correct]="opcion.clases.correct"
-    [class.forget]="opcion.clases.forget"
+    [class.selected]="opcion.isSelectedResponseByUser()"
+    [class.error]="class.error"
+    [class.correct]="class.correct"
+    [class.forget]="class.forget"
   >
     <div class="mt-2 ps-2">
       <h5 class="card-title">
         {{correlativo}}
-        <span *ngIf="opcion.clases.correct" class="badge">
+        <span *ngIf="class.correct" class="badge">
           <i class="material-icons correct">check_circle</i>
         </span>
-        <span *ngIf="opcion.clases.error" class="badge">
+        <span *ngIf="class.error" class="badge">
           <i class="material-icons error">clear</i>
         </span>
-        <span *ngIf="opcion.clases.forget" class="badge">
+        <span *ngIf="class.forget" class="badge">
           <i class="material-icons forget">warning</i>
         </span>
       </h5>

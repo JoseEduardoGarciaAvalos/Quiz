@@ -1,6 +1,11 @@
 import { Component, OnInit } from "@angular/core";
 import { QuizService } from "src/app/service/quiz.service";
-import { Opcion, OpcionClass, OpcionList } from "src/app/model/Opcion";
+import {
+  Opcion,
+  OpcionList,
+  OpcionUnicaList,
+  OpcionMultipleList
+} from "src/app/model/Opcion";
 import { Pregunta, PreguntaList } from "src/app/model/Pregunta";
 import { ActivatedRoute, Router } from "@angular/router";
 
@@ -16,9 +21,8 @@ export class QuizComponent implements OnInit {
   public preguntas: Pregunta[] = [];
   public pregunta: string = "";
 
-  public opciones: OpcionList = new OpcionList();
-  public numRespuestas: number = 0;
-  public comprobado: boolean = false;
+  public opciones: OpcionList = new OpcionUnicaList();
+  public isChecked: boolean = false;
   public isFinalPregunta: boolean = false;
 
   public btnText1: string = BTN_TEXT1[0];
@@ -36,10 +40,11 @@ export class QuizComponent implements OnInit {
     this.quizS.getPreguntas().subscribe((data) => {
       this.preguntas = data;
       this.pregunta = this.preguntas[0].texto;
+
       this.quizS.preguntas = new PreguntaList(this.preguntas);
       this.btnUpdateText();
+      this.cargarOpciones();
     });
-    this.cargarOpciones();
   }
 
   btnUpdateText() {
@@ -48,7 +53,6 @@ export class QuizComponent implements OnInit {
   }
 
   siguientePregunta() {
-    if (!this.comprobado) this.opciones.comprobarOpciones();
     this.quizS.preguntas.setOpciones(this.numPregunta - 1, this.opciones);
 
     if (this.isFinalPregunta) {
@@ -56,7 +60,7 @@ export class QuizComponent implements OnInit {
       return;
     }
 
-    this.opciones = new OpcionList();
+    this.opciones = new OpcionUnicaList();
     this.pregunta = this.preguntas[this.numPregunta].texto;
     this.numPregunta++;
     this.btnUpdateText();
@@ -64,24 +68,25 @@ export class QuizComponent implements OnInit {
   }
 
   seleccionarOpcion(opcion: Opcion) {
-    if (this.comprobado) return;
+    if (this.isChecked) return;
 
-    if (this.numRespuestas === 1) this.opciones.resetSelected();
-    opcion.clases.selected = !opcion.clases.selected;
+    this.opciones.changeUserResponse(opcion);
   }
 
   cargarOpciones() {
     this.quizS.getOpciones(this.numPregunta).subscribe((data) => {
-      this.opciones = new OpcionList(data);
-      this.numRespuestas = this.opciones.getNumRespuestas();
-      this.comprobado = false;
+      this.opciones = this.factory(data);
+      this.isChecked = false;
     });
   }
 
   comprobarPregunta() {
-    if (this.comprobado) return;
+    this.isChecked = true;
+  }
 
-    this.opciones.comprobarOpciones();
-    this.comprobado = true;
+  factory(data) {
+    if (this.preguntas[this.numPregunta - 1].tipo === 2)
+      return new OpcionMultipleList(data);
+    else return new OpcionUnicaList(data);
   }
 }

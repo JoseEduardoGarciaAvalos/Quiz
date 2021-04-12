@@ -1,17 +1,18 @@
 import { List } from "./Base";
-import { OpcionList } from "./Opcion";
+import { OpcionList, OpcionUnicaList } from "./Opcion";
 
 export class Pregunta {
   constructor(
     public code: number = 0,
     public texto: string = "",
-    public opciones: OpcionList = new OpcionList(),
+    public tipo: number = 0,
+    public opciones: OpcionList = new OpcionUnicaList(),
     public _id?: string
   ) {}
 }
 
 export class PreguntaList extends List {
-  public model() {
+  protected model() {
     return new Pregunta();
   }
 
@@ -29,7 +30,7 @@ export class PreguntaList extends List {
 
   public getNumberAnsweredCorrectly(): number {
     return this.models.reduce((previous, { opciones }) => {
-      return previous + (opciones.isCorrectAnswersByUser() ? 1 : 0);
+      return previous + (opciones.isAllCorrectResponseByUser() ? 1 : 0);
     }, 0);
   }
 }
