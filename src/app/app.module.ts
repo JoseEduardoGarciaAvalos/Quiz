@@ -13,8 +13,11 @@ import { QuizComponent } from "./view/quiz/quiz";
 import { ResultadoComponent } from "./view/resultado/resultado";
 import { MainComponent } from "./view/main/main";
 
+import { SanitizeHTML } from "./shared/sanitizeHTML.pipe";
+
 @NgModule({
   declarations: [
+    SanitizeHTML,
     AppComponent,
     NavbarComponent,
     PreguntaComponent,
