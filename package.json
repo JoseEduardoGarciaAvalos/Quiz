@@ -24,6 +24,7 @@
     "@angular/router": "11.0.3",
     "alasql": "0.6.5",
     "core-js": "3.8.0",
+    "highlight.js": "10.7.2",
     "rxjs": "6.6.3",
     "sanitize-html": "2.3.3",
     "tslib": "2.0.3",

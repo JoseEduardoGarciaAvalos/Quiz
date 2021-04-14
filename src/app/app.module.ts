@@ -14,10 +14,12 @@ import { ResultadoComponent } from "./view/resultado/resultado";
 import { MainComponent } from "./view/main/main";
 
 import { SanitizeHTML } from "./shared/sanitizeHTML.pipe";
+import { CodeFormatter } from "./shared/codeFormatter.pipe";
 
 @NgModule({
   declarations: [
     SanitizeHTML,
+    CodeFormatter,
     AppComponent,
     NavbarComponent,
     PreguntaComponent,
