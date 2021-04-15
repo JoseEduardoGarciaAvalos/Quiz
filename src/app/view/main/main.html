@@ -1,17 +1,22 @@
 <section class="mx-5">
   BANNER
 </section>
-<section class="row mx-5">
+<section class="container row justify-content-center">
   <article
-    class="col-4 card m-5 p-3 test-container"
+    class="card col-12 col-xl-5 my-3 mx-xl-2 d-flex"
     *ngFor="let quiz of quizes"
   >
-    <header>
+    <header class="my-3">
       {{quiz.titulo}}
     </header>
-    <div>{{quiz.descripcion}}</div>
-    <div class="test-container-btns d-grid">
-      <button (click)="irQuiz(quiz.code)" mat-raised-button color="primary">
+    <div class="my-3">{{quiz.descripcion}}</div>
+    <div class="my-3 align-self-stretch">
+      <button
+        class="col-12 col-sm-10 col-lg-5 col-xl-5"
+        (click)="irQuiz(quiz.code)"
+        mat-raised-button
+        color="primary"
+      >
         Realizar
       </button>
     </div>

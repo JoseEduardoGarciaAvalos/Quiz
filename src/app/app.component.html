@@ -1,4 +1,12 @@
 <!-- https://colorhunt.co/palette/265132-->
 
-<app-navbar></app-navbar> <router-outlet></router-outlet>
-<router-outlet></router-outlet>
+<div
+  class="card-img card border-0 shadow my-5 d-flex flex-column justify-content-between"
+>
+  <app-navbar> </app-navbar>
+
+  <div class="main container px-5 mb-3">
+    <router-outlet></router-outlet>
+  </div>
+  <footer class="footer container row px-5 mb-4"></footer>
+</div>

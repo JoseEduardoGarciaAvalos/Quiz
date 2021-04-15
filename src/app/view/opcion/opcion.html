@@ -7,7 +7,7 @@
     [class.forget]="class.forget"
   >
     <div class="mt-2 ps-2">
-      <h5 class="card-title">
+      <p class="card-title">
         {{correlativo}}
         <span *ngIf="class.correct" class="badge">
           <i class="material-icons correct">check_circle</i>
@@ -18,8 +18,8 @@
         <span *ngIf="class.forget" class="badge">
           <i class="material-icons forget">warning</i>
         </span>
-      </h5>
-      <span> {{opcion.texto}}</span>
+      </p>
+      <span class="card-body d-block"> {{opcion.texto}}</span>
     </div>
   </div>
 </div>

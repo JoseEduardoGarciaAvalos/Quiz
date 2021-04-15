@@ -5,3 +5,10 @@ body {
   font-family: sans-serif;
   background-color: #edffec;
 }
+
+body {
+  background-image: url("https://dcom-prod.imgix.net/files/2020-04/Por-que-el-cielo-se-ve-azul_thumbnail.jpg?w=1280&h=720&crop=focalpoint&fp-x=0.50974025974026&fp-y=0.53030303030303&fit=crop&auto=compress&q=75");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}

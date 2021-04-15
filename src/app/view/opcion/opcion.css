@@ -1,5 +1,6 @@
 .badge {
-  float: right;
+  position: absolute;
+  right: 10px;
 }
 .card.opcion:hover {
   cursor: pointer;
