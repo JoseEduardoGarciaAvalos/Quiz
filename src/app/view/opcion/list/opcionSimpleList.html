@@ -1,0 +1,8 @@
+<app-opcionSimpleItem
+  class="mt-4 p-2"
+  *ngFor="let opcion of opciones.get(); index as i"
+  [correlativo]="i+1"
+  [isViewFeedback]="isViewFeedback"
+  [opcion]="opcion"
+  (click)="seleccionarOpcion(opcion)"
+></app-opcionSimpleItem>

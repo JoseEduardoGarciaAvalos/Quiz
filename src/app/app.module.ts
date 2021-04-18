@@ -8,22 +8,32 @@ import { AppComponent } from "./app.component";
 import { AppRoutingModule } from "./app-routing.module";
 import { NavbarComponent } from "./view/navbar/navbar";
 import { PreguntaComponent } from "./view/pregunta/pregunta";
-import { OpcionComponent } from "./view/opcion/opcion";
+
+import { OpcionSimpleItemComponent } from "./view/opcion/item/opcionSimpleItem";
+import { OpcionDesplegableItemComponent } from "./view/opcion/item/opcionDesplegableItem";
+import { OpcionSimpleListComponent } from "./view/opcion/list/opcionSimpleList";
+import { OpcionCruzadaListComponent } from "./view/opcion/list/opcionCruzadaList";
+
 import { QuizComponent } from "./view/quiz/quiz";
 import { ResultadoComponent } from "./view/resultado/resultado";
 import { MainComponent } from "./view/main/main";
 
 import { SanitizeHTML } from "./shared/sanitizeHTML.pipe";
 import { CodeFormatter } from "./shared/codeFormatter.pipe";
+import { viewPolymorphismDirective } from "./shared/viewPolymorphism.directive";
 
 @NgModule({
   declarations: [
     SanitizeHTML,
     CodeFormatter,
+    viewPolymorphismDirective,
     AppComponent,
     NavbarComponent,
     PreguntaComponent,
-    OpcionComponent,
+    OpcionSimpleItemComponent,
+    OpcionDesplegableItemComponent,
+    OpcionSimpleListComponent,
+    OpcionCruzadaListComponent,
     QuizComponent,
     ResultadoComponent,
     MainComponent
@@ -36,6 +46,7 @@ import { CodeFormatter } from "./shared/codeFormatter.pipe";
     HttpClientModule
   ],
   providers: [],
+  entryComponents: [OpcionSimpleListComponent, OpcionCruzadaListComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
