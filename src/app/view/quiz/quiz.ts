@@ -1,4 +1,11 @@
-import { Component, OnInit } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  Type,
+  ComponentFactoryResolver,
+  ComponentRef
+} from "@angular/core";
 import { QuizService } from "src/app/service/quiz.service";
 import {
   Opcion,
@@ -6,8 +13,12 @@ import {
   OpcionUnicaList,
   OpcionMultipleList
 } from "src/app/model/Opcion";
-import { Pregunta, PreguntaList } from "src/app/model/Pregunta";
 import { ActivatedRoute, Router } from "@angular/router";
+import { Pregunta, PreguntaList } from "src/app/model/Pregunta";
+import { viewPolymorphismDirective } from "../../shared/viewPolymorphism.directive";
+import { OpcionListComponent } from "../opcion/opcionUI";
+import { OpcionSimpleListComponent } from "../opcion/list/opcionSimpleList";
+import { OpcionCruzadaListComponent } from "../opcion/list/opcionCruzadaList";
 
 const BTN_TEXT1: string[] = ["Siguiente", "Finalizar"];
 
@@ -27,10 +38,15 @@ export class QuizComponent implements OnInit {
 
   public btnText1: string = BTN_TEXT1[0];
 
+  @ViewChild(viewPolymorphismDirective, { static: true })
+  viewChild: viewPolymorphismDirective;
+  private opcionListComp: ComponentRef<OpcionListComponent>;
+
   constructor(
     private quizS: QuizService,
     public router: Router,
-    public route: ActivatedRoute
+    public route: ActivatedRoute,
+    private componentFactory: ComponentFactoryResolver
   ) {}
 
   ngOnInit(): void {
@@ -78,16 +94,37 @@ export class QuizComponent implements OnInit {
       this.opciones = this.factory(data);
       this.opciones.shuffleItems();
       this.isChecked = false;
+      this.loadOptionListComponent();
     });
+  }
+
+  loadOptionListComponent() {
+    const viewChildRef = this.viewChild.viewContainerRef;
+    viewChildRef.clear();
+    this.opcionListComp = viewChildRef.createComponent<OpcionListComponent>(
+      this.componentFactory.resolveComponentFactory(this.factory2())
+    );
+    this.opcionListComp.instance.opciones = this.opciones;
+    this.opcionListComp.instance.isViewFeedback = false;
   }
 
   comprobarPregunta() {
     this.isChecked = true;
+    this.opcionListComp.instance.isViewFeedback = true;
   }
 
   factory(data) {
     if (this.preguntas[this.numPregunta - 1].tipo === 2)
       return new OpcionMultipleList(data);
     else return new OpcionUnicaList(data);
+  }
+
+  factory2() {
+    let component: Type<any>;
+    if (this.preguntas[this.numPregunta - 1].tipo === 2)
+      component = OpcionSimpleListComponent;
+    else component = OpcionSimpleListComponent;
+
+    return component;
   }
 }
