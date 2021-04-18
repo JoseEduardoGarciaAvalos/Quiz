@@ -7,6 +7,7 @@ import { OpcionList, OpcionUnicaList } from "src/app/model/Opcion";
 })
 export class OpcionCruzadaListComponent implements OpcionListComponent, OnInit {
   @Input() opciones: OpcionList = new OpcionUnicaList();
+  @Input() isViewFeedback: boolean = false;
 
   ngOnInit(): void {
     console.log("opcionCruzadaListComponent", this.opciones);

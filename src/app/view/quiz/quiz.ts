@@ -19,6 +19,7 @@ import { viewPolymorphismDirective } from "../../shared/viewPolymorphism.directi
 import { OpcionListComponent } from "../opcion/opcionUI";
 import { OpcionSimpleListComponent } from "../opcion/list/opcionSimpleList";
 import { OpcionCruzadaListComponent } from "../opcion/list/opcionCruzadaList";
+import { FactoryMethod } from "../../model/FactoryMethod";
 
 const BTN_TEXT1: string[] = ["Siguiente", "Finalizar"];
 
@@ -91,7 +92,10 @@ export class QuizComponent implements OnInit {
 
   cargarOpciones() {
     this.quizS.getOpciones(this.numPregunta).subscribe((data) => {
-      this.opciones = this.factory(data);
+      this.opciones = FactoryMethod.createOpcionList(
+        this.preguntas[this.numPregunta - 1].tipo - 1,
+        data
+      );
       this.opciones.shuffleItems();
       this.isChecked = false;
       this.loadOptionListComponent();
@@ -102,7 +106,11 @@ export class QuizComponent implements OnInit {
     const viewChildRef = this.viewChild.viewContainerRef;
     viewChildRef.clear();
     this.opcionListComp = viewChildRef.createComponent<OpcionListComponent>(
-      this.componentFactory.resolveComponentFactory(this.factory2())
+      this.componentFactory.resolveComponentFactory(
+        FactoryMethod.getOpcionListComponent(
+          this.preguntas[this.numPregunta - 1].tipo - 1
+        )
+      )
     );
     this.opcionListComp.instance.opciones = this.opciones;
     this.opcionListComp.instance.isViewFeedback = false;
@@ -111,20 +119,5 @@ export class QuizComponent implements OnInit {
   comprobarPregunta() {
     this.isChecked = true;
     this.opcionListComp.instance.isViewFeedback = true;
-  }
-
-  factory(data) {
-    if (this.preguntas[this.numPregunta - 1].tipo === 2)
-      return new OpcionMultipleList(data);
-    else return new OpcionUnicaList(data);
-  }
-
-  factory2() {
-    let component: Type<any>;
-    if (this.preguntas[this.numPregunta - 1].tipo === 2)
-      component = OpcionSimpleListComponent;
-    else component = OpcionSimpleListComponent;
-
-    return component;
   }
 }
