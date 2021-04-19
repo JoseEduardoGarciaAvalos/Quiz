@@ -15,7 +15,6 @@ import { OpcionSimpleListComponent } from "./view/opcion/list/opcionSimpleList";
 import { OpcionCruzadaListComponent } from "./view/opcion/list/opcionCruzadaList";
 
 import { QuizComponent } from "./view/quiz/quiz";
-import { ResultadoComponent } from "./view/resultado/resultado";
 import { MainComponent } from "./view/main/main";
 
 import { SanitizeHTML } from "./shared/sanitizeHTML.pipe";
@@ -35,7 +34,6 @@ import { viewPolymorphismDirective } from "./shared/viewPolymorphism.directive";
     OpcionSimpleListComponent,
     OpcionCruzadaListComponent,
     QuizComponent,
-    ResultadoComponent,
     MainComponent
   ],
   imports: [
