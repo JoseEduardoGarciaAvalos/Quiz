@@ -24,6 +24,10 @@ export class PreguntaList extends List {
     this.models[i].opciones = opciones;
   }
 
+  public getQuestion(index: number): Pregunta {
+    return this.get()[index];
+  }
+
   public getNumberQuestion(): number {
     return this.get().length;
   }
