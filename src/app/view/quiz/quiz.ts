@@ -67,8 +67,8 @@ export class QuizComponent implements OnInit {
   }
 
   cargarOpciones() {
-    let paraProximaPregunta: number = this.stateS.getIndexCurrentQuestion() + 1;
-    this.quizS.getOpciones(paraProximaPregunta).subscribe((data) => {
+    let codeProximaPregunta: number = this.stateS.getQuestionCurrent().code;
+    this.quizS.getOpciones(codeProximaPregunta).subscribe((data) => {
       let opciones: OpcionList = FactoryMethod.createOpcionList(
         this.stateS.getTypeQuestionCurrent(),
         data
