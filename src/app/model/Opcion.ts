@@ -67,7 +67,8 @@ export class OpcionUnicaList extends OpcionList {
 export class OpcionMultipleList extends OpcionList {
   public changeUserResponse({ code }): void {
     this.get().forEach((opcion: Opcion) => {
-      if (opcion.code === code) opcion.setUserResponse(1);
+      if (opcion.code === code)
+        opcion.setUserResponse(opcion.userResponse ? 0 : 1);
     });
   }
 }
