@@ -34,7 +34,7 @@
     <label [for]="'textOption' + i">Opcion {{i + 1}}: </label>
     <input
       type="text"
-      [id]="textOption + i"
+      [id]="'textOption' + i"
       placeholder="Inserte la opcion"
       [(ngModel)]="opcion.texto"
     />
