@@ -3,6 +3,7 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { NgModule } from "@angular/core";
 import { MaterialModule } from "./shared/material.module";
 import { HttpClientModule } from "@angular/common/http";
+import { FormsModule } from "@angular/forms";
 
 import { AppComponent } from "./app.component";
 import { AppRoutingModule } from "./app-routing.module";
@@ -43,7 +44,8 @@ import { viewPolymorphismDirective } from "./shared/viewPolymorphism.directive";
     BrowserModule,
     BrowserAnimationsModule,
     MaterialModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [],
   entryComponents: [OpcionSimpleListComponent, OpcionCruzadaListComponent],

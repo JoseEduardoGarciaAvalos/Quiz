@@ -1,0 +1,54 @@
+<div>
+  <label for="codeQuiz">Codigo del Quiz: </label>
+  <input
+    type="text"
+    id="codeQuiz"
+    placeholder="Inserte el code del quiz"
+    [(ngModel)]="model.code"
+  />
+</div>
+<div>
+  <label for="textQuestion">Pregunta: </label>
+  <input
+    type="text"
+    id="textQuestion"
+    placeholder="Inserte la pregunta"
+    [(ngModel)]="model.texto"
+  />
+</div>
+<div>
+  <label for="typeQuestion">Tipo de pregunta: </label>
+  <input
+    type="text"
+    id="typeQuestion"
+    placeholder="Inserte el tipo de pregunta"
+    [(ngModel)]="model.tipo"
+  />
+</div>
+<div>
+  <button (click)="addOptionModel()">Agregar Opcion</button>
+</div>
+
+<ng-container *ngFor="let opcion of model.opciones.get(); let i = index">
+  <div>
+    <label [for]="'textOption' + i">Opcion {{i + 1}}: </label>
+    <input
+      type="text"
+      [id]="textOption + i"
+      placeholder="Inserte la opcion"
+      [(ngModel)]="opcion.texto"
+    />
+  </div>
+  <div>
+    <label [for]="'responseOption' + i">Respuesta: </label>
+    <input
+      type="text"
+      [id]="'responseOption' + i"
+      placeholder="Inserte la respuesta de la opcion"
+      [(ngModel)]="opcion.respuesta"
+    />
+  </div>
+</ng-container>
+<div>
+  <button (click)="addOptionModel()">Enviar Quiz</button>
+</div>
