@@ -16,6 +16,7 @@ import { OpcionCruzadaListComponent } from "./view/opcion/list/opcionCruzadaList
 
 import { QuizComponent } from "./view/quiz/quiz";
 import { MainComponent } from "./view/main/main";
+import { FormQuizComponent } from "./view/formQuiz/formQuiz";
 
 import { SanitizeHTML } from "./shared/sanitizeHTML.pipe";
 import { CodeFormatter } from "./shared/codeFormatter.pipe";
@@ -34,7 +35,8 @@ import { viewPolymorphismDirective } from "./shared/viewPolymorphism.directive";
     OpcionSimpleListComponent,
     OpcionCruzadaListComponent,
     QuizComponent,
-    MainComponent
+    MainComponent,
+    FormQuizComponent
   ],
   imports: [
     AppRoutingModule,
