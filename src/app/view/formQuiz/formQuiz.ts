@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { Pregunta } from "../../model/Pregunta";
 import { Opcion } from "../../model/Opcion";
+import { QuizService } from "../../service/quiz.service";
 
 @Component({
   selector: "app-formQuiz",
@@ -10,14 +11,22 @@ import { Opcion } from "../../model/Opcion";
 export class FormQuizComponent implements OnInit {
   public model: Pregunta = new Pregunta();
 
-  constructor() {
-    this.model.code;
-  }
+  constructor(private quizService: QuizService) {}
 
   ngOnInit(): void {}
 
   public addOptionModel(): void {
     this.model.opciones.get().push(new Opcion());
-    this.model.opciones.get()[0].respuesta;
+  }
+
+  public sendQuiz(): void {
+    this.quizService.createQuestion(this.model).subscribe((data) => {
+      console.log(data);
+    });
+    this.quizService
+      .createOptions(this.model.opciones.get())
+      .subscribe((data) => {
+        console.log(data);
+      });
   }
 }
