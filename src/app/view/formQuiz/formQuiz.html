@@ -1,54 +1,75 @@
-<div>
-  <label for="codeQuiz">Codigo del Quiz: </label>
-  <input
-    type="text"
-    id="codeQuiz"
-    placeholder="Inserte el code del quiz"
-    [(ngModel)]="model.code"
-  />
-</div>
-<div>
-  <label for="textQuestion">Pregunta: </label>
-  <input
-    type="text"
-    id="textQuestion"
-    placeholder="Inserte la pregunta"
-    [(ngModel)]="model.texto"
-  />
-</div>
-<div>
-  <label for="typeQuestion">Tipo de pregunta: </label>
-  <input
-    type="text"
-    id="typeQuestion"
-    placeholder="Inserte el tipo de pregunta"
-    [(ngModel)]="model.tipo"
-  />
-</div>
-<div>
-  <button (click)="addOptionModel()">Agregar Opcion</button>
-</div>
+<form>
+  <div class="mb-3">
+    <label class="form-label" for="codeQuiz">Codigo del Quiz: </label>
+    <input
+      class="form-control"
+      type="text"
+      id="codeQuiz"
+      placeholder="Inserte el code del quiz"
+      name="model.code"
+      [(ngModel)]="model.code"
+    />
+  </div>
+  <div class="mb-3">
+    <label class="form-label" for="textQuestion">Pregunta: </label>
+    <input
+      class="form-control"
+      type="text"
+      id="textQuestion"
+      placeholder="Inserte la pregunta"
+      name="model.texto"
+      [(ngModel)]="model.texto"
+    />
+  </div>
+  <div class="mb-3">
+    <label class="form-label" for="typeQuestion">Tipo de pregunta: </label>
+    <input
+      class="form-control"
+      type="text"
+      id="typeQuestion"
+      placeholder="Inserte el tipo de pregunta"
+      name="model.tipo"
+      [(ngModel)]="model.tipo"
+    />
+  </div>
+  <div class="mb-3">
+    <button (click)="addOptionModel()">Agregar Opcion</button>
+  </div>
 
-<ng-container *ngFor="let opcion of model.opciones.get(); let i = index">
-  <div>
-    <label [for]="'textOption' + i">Opcion {{i + 1}}: </label>
-    <input
-      type="text"
-      [id]="'textOption' + i"
-      placeholder="Inserte la opcion"
-      [(ngModel)]="opcion.texto"
-    />
+  <ng-container *ngFor="let opcion of model.opciones.get(); let i = index">
+    <div class="mb-3">
+      <label class="form-label" [for]="'textOption' + i"
+        >Opcion {{i + 1}}:
+      </label>
+      <input
+        class="form-control"
+        type="text"
+        [id]="'textOption' + i"
+        placeholder="Inserte la opcion"
+        name="opcion.texto"
+        [(ngModel)]="opcion.texto"
+      />
+    </div>
+    <div class="mb-3">
+      <label class="form-label" [for]="'responseOption' + i">Respuesta: </label>
+      <input
+        class="form-control"
+        type="text"
+        [id]="'responseOption' + i"
+        placeholder="Inserte la respuesta de la opcion"
+        name="opcion.respuesta"
+        [(ngModel)]="opcion.respuesta"
+      />
+    </div>
+  </ng-container>
+  <div class="mb-3">
+    <button (click)="sendQuiz()">Enviar Quiz</button>
   </div>
-  <div>
-    <label [for]="'responseOption' + i">Respuesta: </label>
-    <input
-      type="text"
-      [id]="'responseOption' + i"
-      placeholder="Inserte la respuesta de la opcion"
-      [(ngModel)]="opcion.respuesta"
-    />
-  </div>
-</ng-container>
-<div>
-  <button (click)="sendQuiz()">Enviar Quiz</button>
-</div>
+</form>
+<!-- 
+  ERROR
+  If ngModel is used within a form tag, either the name attribute must be set or the for
+  (Debido a que usa ngModel dentro de la etiqueta form)
+  SOLUCIÓN
+  Añadir name con el mismo valor que  [(ngModel)] para cada control input
+-->
