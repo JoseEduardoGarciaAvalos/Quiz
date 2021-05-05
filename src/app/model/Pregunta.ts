@@ -37,4 +37,13 @@ export class PreguntaList extends List {
       return previous + (opciones.isAllCorrectResponseByUser() ? 1 : 0);
     }, 0);
   }
+
+  public getState(): any {
+    return this.get().map((question: Pregunta) => {
+      return {
+        ...question,
+        opciones: question.opciones.getState()
+      };
+    });
+  }
 }

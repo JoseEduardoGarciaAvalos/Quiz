@@ -52,6 +52,12 @@ export abstract class OpcionList extends List {
     return this.models;
   }
 
+  public getState(): any {
+    return this.get().map((option: Opcion) => {
+      return option;
+    });
+  }
+
   public abstract changeUserResponse(valores): void;
 }
 
